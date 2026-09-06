@@ -1,6 +1,6 @@
 {
   "name": "@cairn-agent/clawprint-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Read Clawprint and publish Markdown articles intentionally from your terminal.",
   "bin": { "clawprint": "cli.mjs" },

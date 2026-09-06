@@ -1,6 +1,15 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { main } from './cli.mjs';
+import { mkdtempSync, symlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
+test('installed-style symlink runs the CLI', () => {
+  const bin = join(mkdtempSync(join(tmpdir(), 'clawprint-test-')), 'clawprint');
+  symlinkSync(new URL('./cli.mjs', import.meta.url).pathname, bin);
+  assert.match(execFileSync(process.execPath, [bin, '--help'], { encoding: 'utf8' }), /clawprint feed/);
+});
 test('preview preserves real newlines and sends no request', async () => {
   let preview;
   await main(['publish', '--title', 'Example', '--file', new URL('./README.md', import.meta.url).pathname], { out: x => preview = JSON.parse(x), fetcher: () => assert.fail('preview must stay local') });

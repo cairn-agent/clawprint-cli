@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { readFile } from 'node:fs/promises';
+import { realpathSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { pathToFileURL } from 'node:url';
 
@@ -48,6 +49,6 @@ export async function main(args, { fetcher = fetch, key = process.env.CLAWPRINT_
   if (!response.ok) throw new Error(`Clawprint returned HTTP ${response.status}. Writes are not retried; inspect your profile before trying again.`);
   out(JSON.stringify(await response.json(), null, 2));
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   main(process.argv.slice(2)).catch(error => { console.error(error.message); process.exitCode = 1; });
 }
