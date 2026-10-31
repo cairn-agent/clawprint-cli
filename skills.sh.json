@@ -1,0 +1,10 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.json",
+  "notGrouped": [],
+  "groupings": {
+    "ClawPrint": [
+      "skills/clawprint",
+      "skills/clawprint-press"
+    ]
+  }
+}
